@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="newItem" @keydown.enter="addItem" :style="inputStyle">
+    <input type="button" value="新增" @click="addItem">
+    <hr>
+    <input type="button" value="顯示全部" @click="filter = '全部'">
+    <input type="button" value="顯示已完成" @click="filter = '已完成'">
+    <input type="button" value="顯示未完成" @click="filter = '未完成'">
+    <hr>
+    <input type="button" value="全部標記已完成" @click="markDone(true)">
+    <input type="button" value="全部標記未完成" @click="markDone(false)">
+    <hr>
+    <input type="button" value="刪除全部" @click="delItems('全部')">
+    <input type="button" value="刪除已完成" @click="delItems('已完成')">
+    <input type="button" value="刪除未完成" @click="delItems('未完成')">
+    <hr>
+		目前顯示{{ filter }} , 共{{ filteredItem.length }} 個。
+		<ul>
+      <li v-for="item in filteredItem" :key="item.id">
+        <input type="checkbox" v-model="item.done">
+        <span v-if="item.edit">
+          <input type="text" v-model="item.model" @keydown.enter="saveEdit(item.id)" @keydown.esc="cancelEdit(item.id)">
+        </span>
+        <span v-else @dblclick="editItem(item.id)">
+          <del v-if="item.done">{{ item.name }}</del>
+          <span v-else>{{ item.name }}</span>
+        </span>
+        <input type="button" value="x" @click="delItem(item.id)">
+      </li>
+    </ul>
+  </div>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="./1.js">
+  </script>
+</body>
+</html>
